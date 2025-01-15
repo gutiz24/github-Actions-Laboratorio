@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dependencies
-          path: hangman-api/node_modules/
+          path: hangman-front/node_modules/
           include-hidden-files: true
   test:
     runs-on: ubuntu-latest
