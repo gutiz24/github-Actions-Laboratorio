@@ -23,6 +23,6 @@ jobs:
         with:
           context: ./hangman-front
           push: true
-          tags: ghcr.io/gutiz24/github-Actions-Laboratorio:latest
+          tags: ghcr.io/gutiz24/github-actions-laboratorio:latest
           file: ./hangman-front/Dockerfile
   
