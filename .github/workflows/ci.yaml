@@ -1,9 +1,6 @@
 name: CI
 
 on:
-  push:
-    branches: [ main ]
-    paths: [ "hangman-front/**" ]
   pull_request:
     branches: [ main ]
     paths: [ "hangman-front/**" ]
