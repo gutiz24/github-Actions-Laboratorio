@@ -15,7 +15,7 @@ on:
     paths: [ "hangman-front/**" ]
 ```
 
-* **Build de la aplicación**
+# Build de la aplicación
 
 El primer job definido es el build de la aplicación que se tratará de los siguientes pasos:
 
@@ -40,7 +40,7 @@ El primer job definido es el build de la aplicación que se tratará de los sigu
           npm ci
           npm run build --if-present
 ```
-* **Ejecución de Tests de la aplicación**
+# Ejecución de Tests de la aplicación
 
 Se trata de una ejecución parecida con el job de `build` solo que no se especifica una versión de node al venir los runners de github Actions con herramientas preinstaladas `node,docker,java,etc...`. 
 
@@ -60,6 +60,8 @@ También como comando se usa `npm test` que será el responsable de ejecutar los
           npm ci
           npm test
 ```
+# Ejemplo de Ejecución de la Pipeline
+
 
 
 # Ejercicios
