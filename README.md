@@ -85,7 +85,6 @@ Al solo activarse la pipeline con una pull request en cambios de archivos en la 
 
 8. Ajusando los valores de los test para que salga correcta la pipeline ya se puede hacer el merge corretamente
 <p align="center">
-    <img src="./img/image3.png" width="30%" height="auto">
     <img src="./img/image5.png" width="30%" height="auto">
 </p>
 
