@@ -83,7 +83,12 @@ Al solo activarse la pipeline con una pull request en cambios de archivos en la 
     <img src="./img/image4.png" width="30%" height="auto">
 </p>
 
-8. Ajusando los valores de los test para que salga correcta la pipeline
+8. Ajusando los valores de los test para que salga correcta la pipeline ya se puede hacer el merge corretamente
+<p align="center">
+    <img src="./img/image3.png" width="30%" height="auto">
+    <img src="./img/image5.png" width="30%" height="auto">
+</p>
+
 # Ejercicios
 
 Para superar el módulo debéis entregar como mínimo:
