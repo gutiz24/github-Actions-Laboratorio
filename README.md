@@ -42,7 +42,9 @@ El primer job definido es el build de la aplicación que se tratará de los sigu
 ```
 * **Ejecución de Tests de la aplicación**
 
-Se trata de una ejecución parecida con el job de `build` solo que cuando se selecciona la versión de node no se especifica uso de caché por no hacer falta en proyectos menos extensos.
+Se trata de una ejecución parecida con el job de `build` solo que no se especifica una versión de node al venir los runners de github Actions con herramientas preinstaladas `node,docker,java,etc...`. 
+
+Y se decide colocar una dependia entre jobs `needs: build` a modo ejemplo de cómo se realiza.
 
 También como comando se usa `npm test` que será el responsable de ejecutar los test del proyecto
 ```yaml
@@ -52,10 +54,6 @@ También como comando se usa `npm test` que será el responsable de ejecutar los
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set up Node.Js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
       - name: test
         working-directory: ./hangman-front
         run: |
