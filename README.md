@@ -62,7 +62,31 @@ También como comando se usa `npm test` que será el responsable de ejecutar los
 ```
 # Ejemplo de Ejecución de la Pipeline
 
+Al solo activarse la pipeline con una pull request en cambios de archivos en la carpeta `hangman-front`, se va a mostrar el proceso que seguiría.
 
+1. Creación de una nueva rama local con `git checkout -b gha-test`
+2. Subirla en el repositorio remoto `git push -u origin gha-test`
+3. Generar cambios dentro del proyecto `hangman-front`. Por ejemplo crear un `README`
+<p align="center">
+    <img src="./img/image1.png" width="30%" height="auto">
+</p>
+
+5. Se hace un `git add` `git commit` y `git push` del repo.
+6. Hacer el pull request desde github
+<p align="center">
+    <img src="./img/image2.png" width="30%" height="auto">
+</p>
+
+7. Al revisar la ejecución de la pipeline se encuetran errores en los test. Mostrando así una de las funcionalidades de las pipelines
+<p align="center">
+    <img src="./img/image3.png" width="30%" height="auto">
+    <img src="./img/image4.png" width="30%" height="auto">
+</p>
+
+8. Ajusando los valores de los test para que salga correcta la pipeline ya se puede hacer el merge corretamente
+<p align="center">
+    <img src="./img/image5.png" width="30%" height="auto">
+</p>
 
 # Ejercicios
 
