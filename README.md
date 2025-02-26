@@ -5,7 +5,7 @@ El archivo relacionado es [`.github/workflows/ci.yaml`](https://github.com/gutiz
 
 El archivo está compuesto de diferentes partes
 
-* **Trigger de la pipeline**
+# Trigger de la pipeline
 
 La pipeline solo se ejercutará cuando se haga una pull request sobre la rama `main` y haya algún cambio dentro de la carpeta `hangman-front/`
 ```yaml
@@ -87,6 +87,47 @@ Al solo activarse la pipeline con una pull request en cambios de archivos en la 
 <p align="center">
     <img src="./img/image5.png" width="50%" height="auto">
 </p>
+
+```diff
++ Propuesta Ejercicio 2
+```
+# Trigger de la pipeline
+
+En este Caso el trigger es de manera manual con la sentencia `workflow_dispatch`
+
+```yaml
+on:
+  workflow_dispatch:
+```
+# Delivery
+
+Respecto a las diferencias con la anterior pipeline de CI:
+  - En el paso `Login to Github Container Registry` se usará para el inicio de sesión con el container registry, este caso el de github `ghcr.io`. El usuario usara es el que ejecute la pipeline `${{ github.actor }}` y como contraseña usará un token personal con el spoce de interacura con el registy `${{ secrets.GITHUB_TOKEN }}`
+  - En el paso `Setup Docker builder` se habilitará la funcionalidad buildx de docker
+  - En el paso `Build and push Docker image` se hace el build de la imagen con un archivo `Dockerfile` dentro de la carpeta `hangman-front/` y los sube al registry con el tag `ghcr.io/gutiz24/hangman-front-actions:latest`
+
+```yaml
+  delivery:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Login to Github Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup Docker builder
+        uses: docker/setup-buildx-action@v3
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./hangman-front
+          push: true
+          tags: ghcr.io/gutiz24/hangman-front-actions:latest
+          file: ./hangman-front/Dockerfile
+```
 
 # Ejercicios
 
