@@ -1,3 +1,47 @@
+```diff
++ Propuesta Ejercicio 1
+```
+El archivo relacionado es [`.github/workflows/ci.yaml`](https://github.com/gutiz24/github-Actions-Laboratorio/blob/main/.github/workflows/ci.yaml)
+
+El archivo está compuesto de diferentes partes
+
+* **Trigger de la pipeline**
+La pipeline solo se ejercutará cuando se haga una pull request sobre la rama `main` y haya algún cambio dentro de la carpeta `hangman-front/`
+```yaml
+on:
+  pull_request:
+    branches: [ main ]
+    paths: [ "hangman-front/**" ]
+```
+
+* **Build de la aplicación**
+El primer job definido es el build de la aplicación que se tratará de los siguientes pasos:
+
+1. Hacer el checkout del repositorio en el paso `Checkout`
+2. Ejecucón de los comandos de instalción limpia `npm ci` y build `npm run build --if-present` en el paso `build`
+3. Subir el artefacto generado del build (`node modules`) que se usará para el siguiente job de test. Este paso está nombrado como `Upload Artifact (dependencies)`
+
+```yaml
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: build
+        working-directory: ./hangman-front
+        run: |
+          npm ci
+          npm run build --if-present
+      - name: Upload Artifact (dependencies)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependencies
+          path: hangman-front/node_modules/
+          include-hidden-files: true
+```
+
+
+
 # Ejercicios
 
 Para superar el módulo debéis entregar como mínimo:
