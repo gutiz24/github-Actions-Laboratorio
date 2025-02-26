@@ -20,7 +20,7 @@ on:
 El primer job definido es el build de la aplicación que se tratará de los siguientes pasos:
 
 1. Hacer el checkout del repositorio de descargarse el proyecto en el paso `Checkout`
-2. Luego se define la versión de node con la acción `actions/setup-node@v4` a parte se especifica el parámetro caché para que en futuras ejecuciones tarde menos la ejecución del build
+2. Luego en la acción `actions/setup-node@v4` se define la versión de node, en este caso la versión 16 por compatibilidades de usar la caché de la acción `cache: 'npm' \n cache-dependency-path: hangman-front/package-lock.json`
 3. Ejecucón de los comandos de instalción limpia `npm ci` y build `npm run build --if-present` en el paso `build`
 ```yaml
   build:
@@ -31,7 +31,7 @@ El primer job definido es el build de la aplicación que se tratará de los sigu
       - name: Set up Node.Js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 16
           cache: 'npm'
           cache-dependency-path: hangman-front/package-lock.json
       - name: build
