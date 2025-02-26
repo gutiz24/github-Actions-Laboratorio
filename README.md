@@ -6,6 +6,7 @@ El archivo relacionado es [`.github/workflows/ci.yaml`](https://github.com/gutiz
 El archivo está compuesto de diferentes partes
 
 * **Trigger de la pipeline**
+
 La pipeline solo se ejercutará cuando se haga una pull request sobre la rama `main` y haya algún cambio dentro de la carpeta `hangman-front/`
 ```yaml
 on:
@@ -15,31 +16,52 @@ on:
 ```
 
 * **Build de la aplicación**
+
 El primer job definido es el build de la aplicación que se tratará de los siguientes pasos:
 
-1. Hacer el checkout del repositorio en el paso `Checkout`
-2. Ejecucón de los comandos de instalción limpia `npm ci` y build `npm run build --if-present` en el paso `build`
-3. Subir el artefacto generado del build (`node modules`) que se usará para el siguiente job de test. Este paso está nombrado como `Upload Artifact (dependencies)`
-
+1. Hacer el checkout del repositorio de descargarse el proyecto en el paso `Checkout`
+2. Luego se define la versión de node con la acción `actions/setup-node@v4` a parte se especifica el parámetro caché para que en futuras ejecuciones tarde menos la ejecución del build
+3. Ejecucón de los comandos de instalción limpia `npm ci` y build `npm run build --if-present` en el paso `build`
 ```yaml
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set up Node.Js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: hangman-front/package-lock.json
       - name: build
         working-directory: ./hangman-front
         run: |
           npm ci
           npm run build --if-present
-      - name: Upload Artifact (dependencies)
-        uses: actions/upload-artifact@v4
-        with:
-          name: dependencies
-          path: hangman-front/node_modules/
-          include-hidden-files: true
 ```
+* **Ejecución de Tests de la aplicación**
 
+Se trata de una ejecución parecida con el job de `build` solo que cuando se selecciona la versión de node no se especifica uso de caché por no hacer falta en proyectos menos extensos.
+
+También como comando se usa `npm test` que será el responsable de ejecutar los test del proyecto
+```yaml
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.Js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: test
+        working-directory: ./hangman-front
+        run: |
+          npm ci
+          npm test
+```
 
 
 # Ejercicios
