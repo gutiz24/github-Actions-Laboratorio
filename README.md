@@ -5,7 +5,7 @@ El archivo relacionado es [`.github/workflows/ci.yaml`](https://github.com/gutiz
 
 El archivo está compuesto de diferentes partes
 
-# Trigger de la pipeline
+## Trigger de la pipeline
 
 La pipeline solo se ejercutará cuando se haga una pull request sobre la rama `main` y haya algún cambio dentro de la carpeta `hangman-front/`
 ```yaml
@@ -15,7 +15,7 @@ on:
     paths: [ "hangman-front/**" ]
 ```
 
-# Build de la aplicación
+## Build de la aplicación
 
 El primer job definido es el build de la aplicación que se tratará de los siguientes pasos:
 
@@ -40,7 +40,7 @@ El primer job definido es el build de la aplicación que se tratará de los sigu
           npm ci
           npm run build --if-present
 ```
-# Ejecución de Tests de la aplicación
+## Ejecución de Tests de la aplicación
 
 Se trata de una ejecución parecida con el job de `build` solo que no se especifica una versión de node al venir los runners de github Actions con herramientas preinstaladas `node,docker,java,etc...`. 
 
@@ -60,7 +60,7 @@ También como comando se usa `npm test` que será el responsable de ejecutar los
           npm ci
           npm test
 ```
-# Ejemplo de Ejecución de la Pipeline
+## Ejemplo de Ejecución de la Pipeline
 
 Al solo activarse la pipeline con una pull request en cambios de archivos en la carpeta `hangman-front`, se va a mostrar el proceso que seguiría.
 
@@ -91,7 +91,7 @@ Al solo activarse la pipeline con una pull request en cambios de archivos en la 
 ```diff
 + Propuesta Ejercicio 2
 ```
-# Trigger de la pipeline
+## Trigger de la pipeline
 
 En este Caso el trigger es de manera manual con la sentencia `workflow_dispatch`
 
@@ -99,7 +99,7 @@ En este Caso el trigger es de manera manual con la sentencia `workflow_dispatch`
 on:
   workflow_dispatch:
 ```
-# Delivery
+## Delivery
 
 Respecto a las diferencias con la anterior pipeline de CI:
   - En el paso `Login to Github Container Registry` se usará para el inicio de sesión con el container registry, este caso el de github `ghcr.io`. El usuario usara es el que ejecute la pipeline `${{ github.actor }}` y como contraseña usará un token personal con el spoce de interacura con el registy `${{ secrets.GITHUB_TOKEN }}`
@@ -128,6 +128,25 @@ Respecto a las diferencias con la anterior pipeline de CI:
           tags: ghcr.io/gutiz24/hangman-front-actions:latest
           file: ./hangman-front/Dockerfile
 ```
+
+## Ejemplo de ejecución Pipeline
+
+Al poderse ejecutar de forma manual, llendo a la parte de `Actions` nos deja correrlo haciendo click en `Run Workflow`
+<p align="center">
+    <img src="./img/image6.png" width="50%" height="auto">
+</p>
+
+El resultado de la pipeline seria la sigiente de la subida de una nueva imagen:
+<p align="center">
+    <img src="./img/image7.png" width="50%" height="auto">
+    <img src="./img/image8.png" width="50%" height="auto">
+</p>
+
+```diff
++ Propuesta Ejercicio 3
+```
+
+
 
 # Ejercicios
 
