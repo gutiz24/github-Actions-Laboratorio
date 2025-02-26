@@ -72,7 +72,18 @@ Al solo activarse la pipeline con una pull request en cambios de archivos en la 
 </p>
 
 5. Se hace un `git add` `git commit` y `git push` del repo.
-6. Hacer el pull request desde github 
+6. Hacer el pull request desde github
+<p align="center">
+    <img src="./img/image2.png" width="30%" height="auto">
+</p>
+
+7. Al revisar la ejecución de la pipeline se encuetran errores en los test. Mostrando así una de las funcionalidades de las pipelines
+<p align="center">
+    <img src="./img/image3.png" width="30%" height="auto">
+    <img src="./img/image4.png" width="30%" height="auto">
+</p>
+
+8. Ajusando los valores de los test para que salga correcta la pipeline
 # Ejercicios
 
 Para superar el módulo debéis entregar como mínimo:
