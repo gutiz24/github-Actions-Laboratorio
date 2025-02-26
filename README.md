@@ -79,7 +79,7 @@ Al solo activarse la pipeline con una pull request en cambios de archivos en la 
 
 7. Al revisar la ejecución de la pipeline se encuetran errores en los test. Mostrando así una de las funcionalidades de las pipelines
 <p align="center">
-    <img src="./img/image3.png" width="40%" height="auto">
+    <img src="./img/image3.png" width="50%" height="auto">
     <img src="./img/image4.png" width="50%" height="auto">
 </p>
 
