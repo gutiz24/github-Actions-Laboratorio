@@ -1,0 +1,22 @@
+name: Tests
+
+on:
+    workflow_dispatch:
+
+
+jobs:
+  e2e-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build docker compose up
+        run: docker compose up -d --build
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+            working-directory: hangman-e2e/e2e
+            start: npm run open
+            wait-on: "http://localhost:3000, http://localhost:8080"
+
+  

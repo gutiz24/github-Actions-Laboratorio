@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  hangman-api:
+    build: ./hangman-api/
+    ports:
+      - 3001:3000
+  hangman-front:
+    build: ./hangman-front/
+    ports:
+      - 8080:8080
+    environment:
+      API_URL: "API_URL=http://localhost:3001"
