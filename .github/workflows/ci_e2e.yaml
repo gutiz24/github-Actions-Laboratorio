@@ -17,6 +17,6 @@ jobs:
         with:
             working-directory: hangman-e2e/e2e
             start: npm run open
-            wait-on: "http://localhost:3001/api/topics, http://localhost:8080"
+            # wait-on: "http://localhost:3001/api/topics, http://localhost:8080"
 
   
