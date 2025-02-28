@@ -191,56 +191,61 @@ on:
           path: hangman-e2e/e2e/cypress/videos
 ```
 
-# Ejercicios
+```diff
++ Propuesta Ejercicio 4
+```
+El código funete del github Action personalizado se encuentra en: [`gutiz24/motivational-issue`](https://github.com/gutiz24/motivational-issue)
 
-Para superar el módulo debéis entregar como mínimo:
+Los archivos principales son:
+ - `index.js` donde se hace la recogia de los datos de la API y se imprime por consola
+ - `actions.yaml` donde se explica qué hace el actions y como se ejecuta. Este caso `using: 'node20'` y el archivo principal a ejecutar `main: 'index.js'`. También es mismo archivo será para que github lo reconozca como una action.
 
-* La parte obligatoria de los ejercicios de Jenkins o GitLab.
-* La parte obligatoria de los ejercicios de GitHub Actions.
-* Uno de los dos ejercicios opcionales de la parte de GitHub Actions
-
-## Ejercicios GitHub Actions
-
-### 1. Crea un workflow CI para el proyecto de frontend - OBLIGATORIO
-
-Copia el directorio [.start-code/hangman-front](../03-github-actions/.start-code/hangman-front) en el directorio raíz del mismo repositorio que usaste para las clases de GitHub Actions. Si no lo creaste, crea un repositorio nuevo.
-
-Después crea un nuevo workflow que se dispare cuando haya cambios en el proyecto `hangman-front` y exista una nueva pull request (deben darse las dos condiciones a la vez). El workflow ejecutará las siguientes operaciones:
-
-* Build del proyecto de front
-* Ejecutar los unit tests
-
-### 2. Crea un workflow CD para el proyecto de frontend - OBLIGATORIO
-
-Crea un nuevo workflow que se dispare manualmente y haga lo siguiente:
-
-* Crear una nueva imagen de Docker
-* Publicar dicha imagen en el [container registry de GitHub](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
-
-### 3. Crea un workflow que ejecute tests e2e - OPCIONAL
-
-Crea un workflow que se lance de la manera que elijas y ejecute los tests e2e que encontrarás en [este enlance](../03-github-actions/.start-code/hangman-e2e/e2e/). Puedes usar [Docker Compose](https://docs.docker.com/compose/gettingstarted/) o [Cypress action](https://github.com/cypress-io/github-action) para ejecutar los tests.
-
-#### Como ejecutar los tests e2e
-
-* Tanto el front como la api se deben estar corriendo
-
-```bash
-docker run -d -p 3001:3000 hangman-api
-docker run -d -p 8080:8080 -e API_URL=http://localhost:3001 hangman-front
+action.yaml
+```yaml
+name: 'Motivational message'
+description: 'Motivational message by Issue label "motivate"'
+runs:
+  using: 'node20'
+  main: 'index.js'
 ```
 
-* Los tests se ejecutan desde el directorio `hangman-e2e/e2e` haciendo uso del comando `npm run open`
+## Trigger del workflow
 
-```bash
-cd hangman-e2e/e2e
-npm run open
+Este caso el trigger se trat cuanto hay una nueva issue en el repo y este esté etiquetado
+
+```yaml
+on:
+    issues: 
+        types: [labeled]
 ```
 
-### 4. Crea una custom JavaScript Action - OPCIONAL
+## motivational-issue
+Este job tiene un condicional aplicado que solo cuando tenga la etiqueta con le valor `motivate` se ejecutará
 
-Crea una custom JavaScript Action que se ejecute cada vez que una `issue` tenga la etiqueta `motivate`. La acción deberá pintar por consola un mensaje motivacional. Puedes usar [esta API](https://type.fit) gratuita. Puedes encontrar más información de como crear una custom JS action en [este enlace](https://docs.github.com/es/actions/creating-actions/creating-a-javascript-action).
+Luego el siguinte paso `gutiz24/motivational-issue@v1.0.0` ya hará uso de la acción personalizada anteriormente creada
 
-```bash
-curl https://type.fit/api/quotes
+```yaml
+    motivanional-issue:
+        if: ${{ github.event.label.name == 'motivate' }}
+        runs-on: ubuntu-latest
+        
+        steps:
+            - uses: gutiz24/motivational-issue@v1.0.0
 ```
+
+## Ejemplo de ejecución
+
+Se crearon 2 issues. Uno con la etiqueta `motivate` y otra sin esa etiqueta.
+<p align="center">
+    <img src="./img/image10.png" width="50%" height="auto">
+</p>
+
+Ejemplo de ejecución del workflow. Como se puede ver, solo se ejecutó cuando había la etiqueta `motivate`
+<p align="center">
+    <img src="./img/image11.png" width="50%" height="auto">
+</p>
+
+Ejemplo de frase motivacional por consola en el workflow que se ejecutó
+<p align="center">
+    <img src="./img/image12.png" width="50%" height="auto">
+</p>
