@@ -1,4 +1,4 @@
-name: Tests
+name: Tests end2end
 
 on:
     workflow_dispatch:
@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build docker compose up
+      - name: run docker compose
         run: docker compose up -d --build
       - name: Cypress run
         uses: cypress-io/github-action@v6

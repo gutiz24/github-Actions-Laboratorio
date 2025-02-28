@@ -99,6 +99,7 @@ En este Caso el trigger es de manera manual con la sentencia `workflow_dispatch`
 on:
   workflow_dispatch:
 ```
+
 ## Delivery
 
 Respecto a las diferencias con la anterior pipeline de CI:
@@ -145,8 +146,45 @@ El resultado de la pipeline seria la sigiente de la subida de una nueva imagen:
 ```diff
 + Propuesta Ejercicio 3
 ```
+En este caso para la ejecución de los test end2end como se debe tener tanto `hangman-front` y `hangman-api` corriendo a la vez. Se ha decidido crear un `docker-compose.yaml` que levante esos 2 servicios y exponga sus puertos `3001` y `8080` respectivamente en el workflow de `.ghithub/workflows/test_e2e.yaml`
 
+## Trigger de la pipeline
 
+En este Caso el trigger es de manera manual con la sentencia `workflow_dispatch`
+
+```yaml
+on:
+  workflow_dispatch:
+```
+## e2e-test
+
+1. Las diferencias con respecto los anteriores wokflows es la implementación de un paso `run docker compose` que se levantará el docker-compose definido.
+2. En el siguiente paso `Cypress run` se hace uso de la acción oficial de cypress `cypress-io/github-action@v6` con los parámetros:
+  - Donde se posicionan la carpeta de cypress `working-directory: hangman-e2e/e2e`
+  - comando a ejecutar para correr los tests `start: npm run open`
+  - comando para que espere a los servicios a que respondan correctamente con un `200` antes de ejecutar los tests `wait-on: "http://localhost:3001/api/topics, http://localhost:8080"`
+3. Y como último paso se sube un artefacto que es propio de cypress de generar un video de cómo ha ejecutado las pruebas. A este artefacto se le dio el nombre de `name: Video-Test-Cypress`
+
+```yaml
+  e2e-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: run docker compose
+        run: docker compose up -d --build
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+            working-directory: hangman-e2e/e2e
+            start: npm run open
+            wait-on: "http://localhost:3001/api/topics, http://localhost:8080"
+      - name: Upload artifacts (Cypress Video)
+        uses: actions/upload-artifact@v4
+        with:
+          name: Video-Test-Cypress
+          path: hangman-e2e/e2e/cypress/videos
+```
 
 # Ejercicios
 
