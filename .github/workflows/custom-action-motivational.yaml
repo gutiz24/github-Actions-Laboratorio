@@ -1,0 +1,13 @@
+name: Motivational issue
+
+on:
+    issues: 
+        types: [labeled]
+
+jobs:
+    motivanional-issue:
+        if: ${{ github.event.label.name == 'motivate' }}
+        runs-on: ubuntu-latest
+        
+        steps:
+            - uses: gutiz24/motivational-issue@v1.0.0
