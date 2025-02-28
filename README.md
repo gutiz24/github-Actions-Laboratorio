@@ -165,6 +165,11 @@ on:
   - comando para que espere a los servicios a que respondan correctamente con un `200` antes de ejecutar los tests `wait-on: "http://localhost:3001/api/topics, http://localhost:8080"`
 3. Y como último paso se sube un artefacto que es propio de cypress de generar un video de cómo ha ejecutado las pruebas. A este artefacto se le dio el nombre de `name: Video-Test-Cypress`
 
+* **Resultado de la operación**
+<p align="center">
+    <img src="./img/image9.png" width="50%" height="auto">
+</p>
+
 ```yaml
   e2e-test:
     runs-on: ubuntu-latest
