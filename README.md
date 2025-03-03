@@ -194,9 +194,6 @@ on:
 ```diff
 + Propuesta Ejercicio 4
 ```
-> [!NOTE]
-> Se ha utilizado otra API `https://zenquotes.io/api/random` de generación de frases al no estar disponible la originalmente propuesta
-
 El código funete del github Action personalizado se encuentra en: [`gutiz24/motivational-issue`](https://github.com/gutiz24/motivational-issue)
 
 Los archivos principales son:
